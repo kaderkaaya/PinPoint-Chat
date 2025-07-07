@@ -6,7 +6,7 @@ surname :{ type: String },
 profileImage:{ type :String },
 mssidn:{ type: String },
 token:{ type:String },
-mail :{type :String }
+// mail :{type :String }
 },
 { timestamps: {
         createdAt: 'createdAt',
