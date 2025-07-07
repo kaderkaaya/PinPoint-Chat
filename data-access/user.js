@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+const {USER_STATUS} = require('../constants/cons');
 const UserModel = require('../models/user');
 class UserDataAccess{
 static async signUp({name, surname, mssidn, profileImage, mail}){
@@ -9,6 +9,7 @@ static async signUp({name, surname, mssidn, profileImage, mail}){
         mssidn,
         profileImage,
         mail,
+        status: USER_STATUS.ACTIVE
     })
     return user;
 }
@@ -23,5 +24,18 @@ static async saveToken({id, token}){
        { $set: { token: token }},
        {$new :true})
 }
+static async findUserById({userId}){
+    console.log('userId',userId)
+    return UserModel.findOne({
+        _id: userId
+    })
 }
+static async deleteAccount({userId}){
+return UserModel.findOneAndUpdate(
+       {_id:userId},
+       { $set: { status: USER_STATUS.DEACTIVE }},
+       {$new :true})
+}
+}
+
 module.exports = UserDataAccess;

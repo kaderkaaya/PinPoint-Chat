@@ -1,6 +1,6 @@
 const UserDataAccess = require('../data-access/user')
 const TokenService = require('../services/token');
-const code = '0508';
+const { USER_STATUS } =require('../constants/cons')
 class UserService {
  static async signUp({ name, surname, mssidn, profileImage}){
     return await UserDataAccess.signUp({name, surname, mssidn, profileImage})
@@ -14,6 +14,19 @@ class UserService {
              token,
              ...user,
             }
+ }
+ static async deleteAccount({userId}){
+   const user = await UserDataAccess.findUserById({userId });
+   console.log('user',user)
+   if(user){
+       return UserDataAccess.deleteAccount({userId})
+   }
+ }
+ static async getProfile({userId}){
+   const user = await UserDataAccess.findUserById({userId})
+   if(user && user.status === USER_STATUS.ACTIVE){
+      return user;
+   }
  }
 }
 module.exports = UserService;
