@@ -1,14 +1,12 @@
-const jwt = require('jsonwebtoken');
 const {USER_STATUS} = require('../constants/cons');
 const UserModel = require('../models/user');
 class UserDataAccess{
-static async signUp({name, surname, mssidn, profileImage, mail}){
+static async signUp({name, surname, mssidn, profileImage}){
     const user = await UserModel.create({
         name,
         surname,
         mssidn,
         profileImage,
-        mail,
         status: USER_STATUS.ACTIVE
     })
     return user;

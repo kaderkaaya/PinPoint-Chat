@@ -7,12 +7,15 @@ class UserService {
  }
  static async signIn({ mssidn }){
     const user = await UserDataAccess.findUser({ mssidn });
+    if(!user){
+       throw new Error('User not found')
+    }
     const token = await TokenService.generateToken({id : user._id});
     
      await UserDataAccess.saveToken({id :user._id, token})
      return {
              token,
-             ...user,
+             ...user.toJSON(),
             }
  }
  static async deleteAccount({userId}){

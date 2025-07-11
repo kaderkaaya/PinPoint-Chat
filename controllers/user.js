@@ -22,15 +22,15 @@ class UserController {
  static async deleteAccount(req, res){
     try {
     const {userId} = req.body;
-    const user = await UserService.deleteAccount({userId});
+    const user = await UserService.deleteAccount({userId}, { new: true });
     return res.status(200).json({message:'User deleted successfully',user})
     } catch (error) {
         return res.status(500).json({error:`${error}`}) 
     }
  }
- static async getProfile(req,res){
+ static async  getProfile(req, res){
    try {
-    const {userId} = req.query;
+    const { userId } = req.query;
     const user = await UserService.getProfile({userId})
     return res.status(200).json({message:'User Profiile:',user})
    } catch (error) {
